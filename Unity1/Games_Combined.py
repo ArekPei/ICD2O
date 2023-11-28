@@ -123,7 +123,7 @@ def superhero_mission(action, player_superhero):
         print(f"You, as {player_superhero}, are confronting the supervillain!")
 
         player_health = 100  # Set player's initial health
-        villain_health = 150  # Set villain's initial health
+        villain_health = 100  # Set villain's initial health
 
         while player_health > 0 and villain_health > 0:
             # Player's turn
