@@ -327,11 +327,10 @@ def superhero_mission(action, player_superhero):
         team_up_hero = random.choice(available_heroes)
         print(f"You team up with {team_up_hero} to confront the supervillain!")
 
-        combined_attack = random.randint(20, 30)  # Simulate combined attack damage
         villain_attack = random.randint(15, 25)  # Simulate villain's attack damage
 
         player_health = 100  # Set player's initial health
-        team_up_hero_health = 120  # Set team-up hero's initial health
+        team_up_hero_health = 100  # Set team-up hero's initial health
         villain_health = 150  # Set villain's initial health
 
         while player_health > 0 and team_up_hero_health > 0 and villain_health > 0:
@@ -347,7 +346,7 @@ def superhero_mission(action, player_superhero):
                 print("Invalid attack choice. Please choose a valid attack.")
                 continue  # Restart the loop to allow the player to choose a valid attack
 
-            print(f"You, as {player_superhero}, attack the supervillain with {player_choice}!")
+            print(f"You, as {team_up_hero}, attack the supervillain with {player_choice}!")
             villain_health -= player_attack
             print(f"The supervillain's health: {villain_health}")
 
@@ -358,8 +357,8 @@ def superhero_mission(action, player_superhero):
 
             # Villain's turn
             print("The supervillain counterattacks!")
-            player_health -= villain_attack
             team_up_hero_health -= villain_attack
+            player_health -= villain_attack / 2
             print(f"Your superhero's health: {player_health}")
             print(f"{team_up_hero}'s health: {team_up_hero_health}")
 
@@ -373,7 +372,38 @@ def superhero_mission(action, player_superhero):
                 break
             elif team_up_hero_health <= 0:
                 print(f"{team_up_hero} has been defeated! You must continue the battle alone.")
-                # Implement logic for continuing the battle alone
+                while player_health > 0 and villain_health > 0:
+                    # Player's turn
+                    player_choice = input("Choose your attack (e.g., punch, kick, special move): ")
+                    if player_choice == "punch":
+                        player_attack = random.randint(10, 15)  # Simulate player's punch attack damage
+                    elif player_choice == "kick":
+                        player_attack = random.randint(15, 20)  # Simulate player's kick attack damage
+                    elif player_choice == "special move":
+                        player_attack = random.randint(25, 30)  # Simulate player's special move attack damage
+                    else:
+                        print("Invalid attack choice. Please choose a valid attack.")
+                        continue  # Restart the loop to allow the player to choose a valid attack
+
+                    print(f"You, as {player_superhero}, attack the supervillain with {player_choice}!")
+                    villain_health -= player_attack
+                    print(f"The supervillain's health: {villain_health}")
+
+                    if villain_health <= 0:
+                        print("Congratulations! You defeated the supervillain!")
+                        # Implement victory logic here
+                        break
+
+                    # Villain's turn
+                    villain_attack = random.randint(15, 25)  # Simulate villain's attack damage
+                    print("The supervillain counterattacks!")
+                    player_health -= villain_attack
+                    print(f"Your superhero's health: {player_health}")
+
+                    if player_health <= 0:
+                        print(f"Your superhero, {player_superhero}, has been defeated! Game over.")
+                        # Implement defeat logic here
+                        break
                 break
 
 # Task 5: Health Management
