@@ -53,7 +53,7 @@ Have fun''')
         temp = random.choices(["hot", "warm", "cold", "freezing"], weights=[0.4, 0.3, 0.3, 0.2])[0]
         customers = calculate_customers(weather, temp)
 
-        print(f"Day {day}: Weather forecast - {weather} - {temp}, Potential customers - {customers}")
+        print(f"Day {day}: Weather forecast - {weather} - {temp}")
 
         # Ask the player to make decisions
         glasses_of_lemonade = int(input("Enter the number of glasses of lemonade to make: "))
