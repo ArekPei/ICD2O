@@ -418,31 +418,31 @@ def manage_health2(current_health, damage_taken):
 def calculate_customers(weather, temp):
     if weather == "sunny":
         if temp == "hot":
-            return random.randint(50, 70)
+            return random.randint(40, 50)
         elif temp == "warm":
-            return random.randint(30, 50)
+            return random.randint(30, 40)
         elif temp == "cold":
-            return random.randint(20, 40)
+            return random.randint(20, 30)
         elif temp == "freezing":
-            return random.randint(10, 30)
+            return random.randint(10, 20)
     elif weather == "cloudy":
             if temp == "hot":
-                return random.randint(40, 60)
+                return random.randint(30, 40)
             elif temp == "warm":
-                return random.randint(20, 40)
+                return random.randint(20, 30)
             elif temp == "cold":
-                return random.randint(10, 30)
+                return random.randint(10, 20)
             elif temp == "freezing":
-                return random.randint(5, 20)
+                return random.randint(5, 10)
     elif weather == "rainy":
         if temp == "hot":
-            return random.randint(50, 70)
+            return random.randint(40, 50)
         elif temp == "warm":
-            return random.randint(25, 45)
+            return random.randint(30, 40)
         elif temp == "cold":
-            return random.randint(10, 30)
+            return random.randint(20, 30)
         elif temp == "freezing":
-            return random.randint(0, 10)
+            return random.randint(10, 20)
 
 def main():
     print('''Before you even start the game, I will need to introduce the mechanics of the game first:
@@ -464,8 +464,8 @@ Have fun''')
     total_profit = 0
 
     for day in range(1, days + 1):
-        weather = random.choices(["sunny", "cloudy", "rainy"], weights=[0.4, 0.3, 0.3])[0]
-        temp = random.choices(["hot", "warm", "cold", "freezing"], weights=[0.4, 0.3, 0.3, 0.2])[0]
+        weather = random.choices(["sunny", "cloudy", "rainy"], weights=[0.3, 0.3, 0.4])[0]
+        temp = random.choices(["hot", "warm", "cold", "freezing"], weights=[0.2, 0.2, 0.3, 0.3])[0]
         customers = calculate_customers(weather, temp)
 
         print(f"Day {day}: Weather forecast - {weather} - {temp}")
@@ -478,37 +478,36 @@ Have fun''')
         # Calculate profit based on the player's decisions and the weather condition
         # For simplicity, let's assume a fixed cost of production per glass
         cost_of_production = 1  # Cost of production per glass
-        cost_of_advertising = 1 # Cost of production per sign
-        revenue = price_per_glass * min(glasses_of_lemonade, customers)
+        cost_of_advertising = 3 # Cost of production per sign
+
+        expenses = glasses_of_lemonade * cost_of_production + advertising_signs * cost_of_advertising
         if price_per_glass == 0:
-            expenses = glasses_of_lemonade * cost_of_production + advertising_signs * cost_of_advertising * 5
+            revenue = price_per_glass * min(glasses_of_lemonade, customers)* 2 + (advertising_signs / 100) * min(glasses_of_lemonade, customers)
         elif price_per_glass <= 1 and not price_per_glass == 0:
-            expenses = glasses_of_lemonade * cost_of_production + advertising_signs * cost_of_advertising * 2
+            revenue = price_per_glass * min(glasses_of_lemonade, customers)* 1.5 + (advertising_signs / 100) * min(glasses_of_lemonade, customers)
         elif price_per_glass <= 3 and not price_per_glass == 0:
-            expenses = glasses_of_lemonade * cost_of_production + advertising_signs * cost_of_advertising * 1.5
-        else:
-            expenses = glasses_of_lemonade * cost_of_production + advertising_signs * cost_of_advertising * 1.5
-        
+            revenue = price_per_glass * min(glasses_of_lemonade, (customers)) + (advertising_signs / 100) * min(glasses_of_lemonade, customers)
+
         daily_profit = revenue - expenses
 
         total_profit += daily_profit
 
-        print(f"Day {day} Profit: ${daily_profit:.2f}")
+        print(f"Day {day} Profit: ${daily_profit:.2f}; Day {day} Customer: {customers}")
 
     print(f"Total profit over {days} days: ${total_profit:.2f}")
 
 gameMode = str(input("Please select the game mode(Pokemon/Superhero/Lemonade):"))
-if gameMode == "Pokemon":   
+if gameMode == "Pokemon" or gameMode == "1" or gameMode == "pokemon":   
     player_pokemon = choose_pokemon()
     game_intro(player_pokemon)
     decision = make_decision()
     pokemon_battle(decision, player_pokemon)
-elif gameMode == "Superhero":
+elif gameMode == "Superhero" or gameMode == "2" or gameMode == "superhero":
     player_superhero = choose_superhero()
     game_intro2(player_superhero)
     decision = make_decision2()
     superhero_mission(decision, player_superhero)
-elif gameMode == "Lemonade":
+elif gameMode == "Lemonade" or gameMode == "3" or gameMode == "lemonade":
     main()
 else:
     print("Invalid input, game over.")

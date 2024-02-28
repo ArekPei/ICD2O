@@ -64,15 +64,13 @@ Have fun''')
         # For simplicity, let's assume a fixed cost of production per glass
         cost_of_production = 1  # Cost of production per glass
         cost_of_advertising = 1 # Cost of production per sign
-        revenue = price_per_glass * min(glasses_of_lemonade, customers)
+        expenses = glasses_of_lemonade * cost_of_production + advertising_signs * cost_of_advertising
         if price_per_glass == 0:
-            expenses = glasses_of_lemonade * cost_of_production + advertising_signs * cost_of_advertising * 5
+            revenue = price_per_glass * min(glasses_of_lemonade, (customers * 2)) + (advertising_signs / 100) * min(glasses_of_lemonade, (customers * 2))
         elif price_per_glass <= 1 and not price_per_glass == 0:
-            expenses = glasses_of_lemonade * cost_of_production + advertising_signs * cost_of_advertising * 2
+            revenue = price_per_glass * min(glasses_of_lemonade, (customers * 1.5)) + (advertising_signs / 100) * min(glasses_of_lemonade, (customers * 1.5))
         elif price_per_glass <= 3 and not price_per_glass == 0:
-            expenses = glasses_of_lemonade * cost_of_production + advertising_signs * cost_of_advertising * 1.5
-        else:
-            expenses = glasses_of_lemonade * cost_of_production + advertising_signs * cost_of_advertising * 1.5
+            revenue = price_per_glass * min(glasses_of_lemonade, (customers)) + (advertising_signs / 100) * min(glasses_of_lemonade, (customers * 1.25))
         
         daily_profit = revenue - expenses
 
