@@ -19,8 +19,8 @@ DOOR_COLOR = (160, 82, 45)
 MOUNTAIN_COLOR = (128, 128, 128)
 SNOW_COLOR = (255, 250, 250)
 FENCE_COLOR = (139, 69, 19)
-BRIDGE_COLOR = (139, 69, 19)
 RIVER_BLUE = (70, 130, 180)
+BOAT_COLOR = (205, 133, 63)
 
 class Scene:
     def __init__(self):
@@ -51,14 +51,14 @@ class Scene:
         # Drawing a house
         self.draw_house(550, 320)
 
-        # Drawing a fence
-        self.draw_fence(50, 450, 500)
-
         # Drawing a river
         pygame.draw.rect(self.screen, RIVER_BLUE, (0, 480, SCREEN_WIDTH, 120))
 
-        # Drawing a bridge
-        self.draw_bridge(200, 470, 400, 100, 60)
+        # Drawing a fence
+        self.draw_fence(50, 450, 500)
+
+        # Drawing a boat
+        self.draw_boat(600, 520)
 
     def draw_tree(self, x, y):
         pygame.draw.rect(self.screen, TREE_BROWN, (x + 15, y + 60, 20, 40))
@@ -75,9 +75,8 @@ class Scene:
     def draw_fence(self, x, y, length):
         pygame.draw.line(self.screen, FENCE_COLOR, (x, y), (length, y), 5)
 
-    def draw_bridge(self, x, y, width, radius, gap):
-        pygame.draw.arc(self.screen, BRIDGE_COLOR, (x, y - radius, width, 2 * radius), 0, 3.14, 10)
-        pygame.draw.arc(self.screen, BRIDGE_COLOR, (x, y - radius - gap, width, 2 * radius), 0, 3.14, 10)
+    def draw_boat(self, x, y):
+        pygame.draw.polygon(self.screen, BOAT_COLOR, [(x, y), (x + 60, y - 30), (x + 120, y), (x + 60, y + 30)])
 
     def run(self):
         clock = pygame.time.Clock()
