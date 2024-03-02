@@ -12,12 +12,16 @@ class MusicPlayer:
         self.current_index = 0
         self.audio_files = []
         self.current_file_label = None
+        self.current_folder_label = None
 
         self.setup_gui()
         
     def setup_gui(self):
         self.select_button = tk.Button(self.root, text="Select Folder", command=self.select_folder)
         self.select_button.pack(pady=10)
+        
+        self.current_folder_label = tk.Label(self.root, text="Current Folder: None")
+        self.current_folder_label.pack(pady=5)
         
         self.play_button = tk.Button(self.root, text="Play", command=self.play)
         self.play_button.pack(pady=5)
@@ -42,6 +46,8 @@ class MusicPlayer:
             self.audio_files = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith((".mp3", ".wav"))]
             if not self.audio_files:
                 messagebox.showerror("Error", "No audio files found in the selected folder.")
+            else:
+                self.current_folder_label.config(text="Current Folder: " + folder_path)
         
     def play(self):
         if not self.audio_files:
