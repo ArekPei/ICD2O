@@ -49,13 +49,13 @@ class Scene:
         self.draw_tree(600, 380)
 
         # Drawing a house
-        self.draw_house(550, 320)
+        self.draw_house(550, 330)
 
         # Drawing a river
         pygame.draw.rect(self.screen, RIVER_BLUE, (0, 480, SCREEN_WIDTH, 120))
 
         # Drawing a fence
-        self.draw_fence(50, 450, 500)
+        self.draw_fence(10, 450, 545)
 
         # Drawing a boat
         self.draw_boat(600, 520)
@@ -70,7 +70,7 @@ class Scene:
         pygame.draw.polygon(self.screen, ROOF_COLOR, [(x, y), (x + 100, y - 100), (x + 200, y)])
         pygame.draw.rect(self.screen, WINDOW_COLOR, (x + 40, y + 40, 50, 50))
         pygame.draw.rect(self.screen, WINDOW_COLOR, (x + 110, y + 40, 50, 50))
-        pygame.draw.rect(self.screen, DOOR_COLOR, (x + 85, y + 80, 30, 70))
+        pygame.draw.rect(self.screen, DOOR_COLOR, (x + 85, y + 100, 30, 50))
 
     def draw_fence(self, x, y, length):
         pygame.draw.line(self.screen, FENCE_COLOR, (x, y), (length, y), 5)
