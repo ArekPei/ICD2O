@@ -13,7 +13,9 @@ class MusicPlayer:
         self.audio_files = []
         self.current_file_label = None
         self.current_folder_label = None
-
+        self.paused = False  # Flag to indicate if music is paused
+        self.paused_position = 0  # Initialize paused position
+        
         self.setup_gui()
         
     def setup_gui(self):
@@ -26,8 +28,8 @@ class MusicPlayer:
         self.play_button = tk.Button(self.root, text="Play", command=self.play)
         self.play_button.pack(pady=5)
         
-        self.stop_button = tk.Button(self.root, text="Stop", command=self.stop)
-        self.stop_button.pack(pady=5)
+        self.pause_button = tk.Button(self.root, text="Pause/Resume", command=self.pause_resume)
+        self.pause_button.pack(pady=5)
         
         self.back_button = tk.Button(self.root, text="Back", command=self.play_previous)
         self.back_button.pack(pady=5)
@@ -41,7 +43,8 @@ class MusicPlayer:
         self.root.protocol("WM_DELETE_WINDOW", self.quit)
         
     def select_folder(self):
-        folder_path = filedialog.askdirectory()
+        default_folder = "Music"  # Change this to your default folder location
+        folder_path = filedialog.askdirectory(initialdir=default_folder)
         if folder_path:
             self.audio_files = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith((".mp3", ".wav"))]
             if not self.audio_files:
@@ -70,9 +73,6 @@ class MusicPlayer:
                 self.play_next()
         self.root.after(100, self.check_music_end)
         
-    def stop(self):
-        pygame.mixer.music.stop()
-        
     def play_next(self):
         if self.audio_files:
             self.current_index = (self.current_index + 1) % len(self.audio_files)
@@ -86,7 +86,21 @@ class MusicPlayer:
             pygame.mixer.music.load(self.audio_files[self.current_index])
             pygame.mixer.music.play()
             self.update_current_file_label()
-        
+            
+    def pause_resume(self):
+        if pygame.mixer.music.get_busy() and not self.paused:
+            # Pause the music and remember the position
+            self.paused_position = pygame.mixer.music.get_pos()
+            pygame.mixer.music.pause()
+            self.paused = True
+        elif pygame.mixer.music.get_busy() and self.paused:
+            # Resume from the paused position if music is paused
+            pygame.mixer.music.unpause()
+            self.paused = False
+        else:
+            # If the music is not playing, start playing from the current index
+            self.play()
+
     def update_current_file_label(self):
         current_file = os.path.basename(self.audio_files[self.current_index])
         self.current_file_label.config(text="Current file: " + current_file)
